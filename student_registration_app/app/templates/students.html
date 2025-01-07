@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+
+{% block title %}Students{% endblock %}
+
+{% block content %}
+<style>
+    /* Card Styling */
+    .card {
+        max-width: 1000px;
+        margin: 50px auto;
+        border-radius: .5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #0056b3;
+        color: white;
+        text-align: center;
+        padding: 1.5rem;
+        font-size: 1.5rem;
+        border-radius: .5rem .5rem 0 0;
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+
+    /* Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #0056b3;
+        color: white;
+        cursor: pointer;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tbody tr:hover {
+        background-color: #e2e6ea;
+        cursor: pointer;
+    }
+
+    /* Pagination and Search Bar */
+    .pagination {
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination .page-link {
+        color: #007bff;
+        border-color: #ddd;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .search-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .search-container input {
+        padding: 10px;
+        width: 250px;
+        border-radius: .25rem;
+        border: 1px solid #ddd;
+    }
+
+    /* Responsive Design for Table */
+    @media (max-width: 768px) {
+        .card {
+            margin: 20px;
+            padding: 1rem;
+        }
+
+        table {
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 8px;
+        }
+    }
+</style>
+
+<div class="card">
+    <div class="card-header">
+        <h1>All Students</h1>
+    </div>
+    <div class="card-body">
+        <!-- Search Bar -->
+        <form method="get" action="/students">
+            <div class="search-container">
+                <input type="text" name="search" value="{{ request.args.get('search') }}" placeholder="Search by Name, Age or Email">
+            </div>
+        </form>
+
+        <!-- Table with Advanced Features -->
+        <table id="studentsTable" class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.age }}</td>
+                    <td>{{ student.email }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            {% if students.has_prev %}
+                <a class="page-link" href="{{ url_for('students', page=students.prev_num) }}">Previous</a>
+            {% endif %}
+            {% if students.has_next %}
+                <a class="page-link" href="{{ url_for('students', page=students.next_num) }}">Next</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

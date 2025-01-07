@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        padding: 20px;
+        background-color: #f4f4f9;
+    }
+
+    .card {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 2rem;
+        color: #333;
+    }
+
+    label {
+        display: block;
+        margin: 10px 0 5px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1.1rem;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #5cb85c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.125rem;
+    }
+
+    button:hover {
+        background-color: #4cae4c;
+    }
+
+    .invalid-feedback {
+        font-size: 0.875rem;
+        color: red;
+    }
+
+</style>
+
+<div class="card">
+    <h1>Register a New Student</h1>
+    <form action="/register" method="post" class="needs-validation" novalidate>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+        <div class="invalid-feedback">
+            Please provide a name.
+        </div>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" placeholder="Enter your age" min="1" required>
+        <div class="invalid-feedback">
+            Please provide an age.
+        </div>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        <div class="invalid-feedback">
+            Please provide a valid email.
+        </div>
+
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+<script>
+    // JavaScript for enabling Bootstrap validation styles
+    (function () {
+        'use strict'
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+{% endblock %}
